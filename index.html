@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+    <head>
+	<link rel="stylesheet" type="text/css" href="estilos.css">
+    <title>Calculadoras</title>
+    </head>
+    <body>
+
+            <select id="financial-calculations">
+                <option value="">Selecciona una opción</option>
+                <option value="anualidad">Anualidad</option>
+                <option value="amortizacion">Amortización</option>
+                <option value="interes">Interés</option>
+            </select>
+            <div id="anualidad-calculator" style="display:none">
+                <!-- Contenido de la calculadora de anualidades -->
+            </div>
+            <div id="amortizacion-calculator" style="display:none">
+                <!-- Contenido de la calculadora de amortizaciones -->
+            </div>
+            <div id="interes-calculator" style="display:none">
+                <!-- Contenido de la calculadora de intereses -->
+            </div>
+            <script>
+                document.getElementById("financial-calculations").addEventListener("change", function() {
+                    if (this.value === "anualidad") {
+                        document.getElementById("anualidad-calculator").style.display = "block";
+                        document.getElementById("amortizacion-calculator").style.display = "none";
+                        document.getElementById("interes-calculator").style.display = "none";
+                    } else if (this.value === "amortizacion") {
+                        document.getElementById("anualidad-calculator").style.display = "none";
+                        document.getElementById("amortizacion-calculator").style.display = "block";
+                        document.getElementById("interes-calculator").style.display = "none";
+                    } else if (this.value === "interes") {
+                        document.getElementById("anualidad-calculator").style.display = "none";
+                        document.getElementById("amortizacion-calculator").style.display = "none";
+                        document.getElementById("interes-calculator").style.display = "block";
+                    }
+                });
+            </script>
+
+
+        <select id="financial-calculations">
+            <option value="anualidad">Anualidad</option>
+            <option value="gradiente">Gradiente</option>
+            <option value="payback">Payback</option>
+            <option value="punto_equilibrio">Punto de equilibrio</option>
+            <option value="tir">TIR</option>
+            <option value="van">VAN</option>
+        </select>
+        <form>
+        <label>Tipo de anualidad:</label>
+        <select id="select_tipo_anualidad">
+            <option value="A_v">Anualidad vencida</option>
+            <option value="A_a">Anualidad anticipada</option>
+            <option value="A_d">Anualidad diferida</option>
+            <option value="A_p">Anualidad perpetua</option>
+        </select>
+            
+        <label>Valor de la anualidad:</label>
+        <input type="text" id="input_anualidad">
+        <br>
+        <label>Tasa de interés:</label>
+        <input type="text" id="interes">
+        <br>
+        <label>Numero de periodos:</label>
+        <input type="text" id="periodo">
+        <br>
+        <label>Tipo de anualidad:</label>
+        <br>
+        <input type="radio" id="A_vencida_VP" name="type" value="A_v_vp" checked> Anualidad vencida - valor presente
+        <br>
+        <input type="radio" id="A_vencida_VF" name="type" value="A_v_vf"> Anualidad vencida - valor futuro
+        <br>
+        <br>
+        <label>Frecuencia de pagos:</label>
+        <br>
+        <input type="radio" id="anual" name="frequency" value="anualV" checked> Anual (1)
+        <br>
+        <input type="radio" id="semestral" name="frequency" value="semestralV"> Semestral (2)
+        <br>
+        <input type="radio" id="cuatrimestral" name="frequency" value="cuatrimestralV"> Cuatrimestral (3)
+        <br>
+        <input type="radio" id="trimestral" name="frequency" value="trimestralV"> Trimestral (4)
+        <br>
+        <input type="radio" id="bimestral" name="frequency" value="bimestralV"> Bimestral (6)
+        <br>
+        <input type="radio" id="mensual" name="frequency" value="mensualV"> Mensual (12)
+        <br>
+        <button type="button" onclick="anualidad_vencida()">Calcular</button>
+        <br>
+        <label>Pago:</label>
+        <input type="text" id="pagoV" readonly>
+        </form>
+        <button type="button" onclick="resetValues(this.form)">Limpiar</button>
+        <script>
+
+            document.getElementById("financial-calculations").addEventListener("change", function() {
+                if (this.value === "anualidad") {
+                document.getElementById("anualidad-calculator").style.display = "block";
+                document.getElementById("otra-calculadora").style.display = "none";
+                } else if (this.value === "otra-opcion") {
+                document.getElementById("anualidad-calculator").style.display = "none";
+                document.getElementById("otra-calculadora").style.display = "block";
+                }
+            });
+
+
+            // Se obtienen los valores de los inputs
+            let tipo_anualidad = document.getElementById("select_tipo_anualidad").value;
+            
+            // Función para calcular la anualidad vencida
+            function anualidad_vencida() {
+                let anualidad = document.getElementById("input_anualidad").value;
+                let interes = document.getElementById("interes").value;
+                let periodo = document.getElementById("periodo").value;
+                let tipo_anualidad = document.getElementById("select_tipo_anualidad").value;
+                let frecuencia = document.querySelector('input[name="frequency"]:checked').value;
+                let pago = document.getElementById("pagoV");
+                let resultado = 0;
+                let frecuencia_numerica = 0;
+                
+                // Se obtiene el valor numérico de la frecuencia
+                if (frecuencia == "anualV") {
+                    frecuencia_numerica = 1;
+                } else if (frecuencia == "semestralV") {
+                    frecuencia_numerica = 2;
+                } else if (frecuencia == "cuatrimestralV") {
+                    frecuencia_numerica = 3;
+                } else if (frecuencia == "trimestralV") {
+                    frecuencia_numerica = 4;
+                } else if (frecuencia == "bimestralV") {
+                    frecuencia_numerica = 6;
+                } else if (frecuencia == "mensualV") {
+                    frecuencia_numerica = 12;
+                }
+            }
+                
+                // Se calcula el valor de la anualidad vencida
+                
+                
+            // Función para limpiar los inputs
+            function resetValues(form) {
+                document.getElementById("input_anualidad").value = "";
+                document.getElementById("interes").value = "";
+                document.getElementById("periodo").value = "";
+                document.getElementById("pagoV").value = "";
+            }
+        </script>
+    </body>
+</html>
